@@ -8,7 +8,10 @@
         "compile-scss": "gulp css",
         "compile-html": "gulp html",
         "compile-javascript": "gulp javascript",
-        "compile-images": "gulp images"
+        "compile-images": "gulp images",
+        "compile-style-inline-html": "gulp inlineStyle",
+        "build-for-email": "gulp forEmail",
+        "build-for-prod": "gulp forProd"
     },
     "author": "Emmanuel Aina",
     "license": "MIT",
@@ -26,6 +29,7 @@
         "gulp-eslint": "^6.0.0",
         "gulp-htmlmin": "^5.0.1",
         "gulp-imagemin": "^6.1.0",
+        "gulp-inline-css": "^3.4.0",
         "gulp-jasmine-phantom": "^3.0.0",
         "gulp-postcss": "^8.0.0",
         "gulp-replace": "^1.0.0",

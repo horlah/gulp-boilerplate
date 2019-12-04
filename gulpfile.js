@@ -12,12 +12,14 @@ const babel = require('gulp-babel');
 const eslint = require('gulp-eslint');
 const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
+const inlineCss = require('gulp-inline-css');
 const browsersync = require('browser-sync').create();
 
 const files = {
     scssPath: 'src/*.scss',
     jsPath: 'src/*.js',
     htmlPath: 'src/*.html',
+    inlineStylingPath: 'dist/*.html',
     imagePath: 'src/assets/*.*'
 };
 
@@ -50,6 +52,13 @@ function jsLinting() {
 function html() {
     return src(files.htmlPath)
         .pipe(htmlmin({collapseWhitespace: true}))
+        .pipe(dest('dist/'))
+        .pipe(browsersync.stream());
+}
+
+function makeStylesInlineHTML() {
+    return src(files.inlineStylingPath)
+        .pipe(inlineCss())
         .pipe(dest('dist/'))
         .pipe(browsersync.stream());
 }
@@ -92,6 +101,9 @@ function watchFiles() {
 
 exports.default = series(watchFiles);
 exports.css = css;
+exports.inlineStyle = makeStylesInlineHTML;
 exports.html = html;
 exports.javascript = parallel(jsLinting, js);
 exports.images = images;
+exports.forProd = parallel(css, html, this.javascript, images);
+exports.forEmail = parallel(css, html, this.javascript, images, makeStylesInlineHTML);
